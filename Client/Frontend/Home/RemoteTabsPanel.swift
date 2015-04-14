@@ -83,10 +83,11 @@ class RemoteTabsPanel: UITableViewController, HomePanel {
                 // Maybe show a background view.
                 let tableView = self.tableView
                 if tabs.isEmpty {
+                    // TODO: Bug 1144760 - Populate background view with UX-approved content.
                     tableView.backgroundView = UIView()
                     tableView.backgroundView?.frame = tableView.frame
-                    // TODO: Populate background view with UX-approved content.
                     tableView.backgroundView?.backgroundColor = UIColor.redColor()
+
                     // Hide dividing lines.
                     tableView.separatorStyle = UITableViewCellSeparatorStyle.None
                 } else {
@@ -98,6 +99,7 @@ class RemoteTabsPanel: UITableViewController, HomePanel {
             } else {
                 log.error("Failed to fetch tabs.")
             }
+
             // Always end refreshing, even if we failed!
             self.refreshControl?.endRefreshing()
         })
@@ -124,7 +126,7 @@ class RemoteTabsPanel: UITableViewController, HomePanel {
             view.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: RemoteTabsPanelUX.HeaderHeight)
             view.textLabel.text = client.name
 
-            // TODO: Convert timestamp to locale-relative timestring.
+            // TODO: Bug 1154088 - Convert timestamp to locale-relative timestring.
             // TODO: note that this is very likely to be wrong; it'll show the last time the other device
             // uploaded a record, *or another device sent that device a command*.
             let label = NSLocalizedString("Last synced: %@", comment: "Remote tabs last synced time")
@@ -144,7 +146,7 @@ class RemoteTabsPanel: UITableViewController, HomePanel {
         let cell = tableView.dequeueReusableCellWithIdentifier(RemoteTabIdentifier, forIndexPath: indexPath) as! TwoLineTableViewCell
         let tab = tabAtIndexPath(indexPath)
         cell.setLines(tab?.title, detailText: tab?.URL.absoluteString)
-        // TODO: Populate image with cached favicons.
+        // TODO: Bug 1144765 - Populate image with cached favicons.
         return cell
     }
 
