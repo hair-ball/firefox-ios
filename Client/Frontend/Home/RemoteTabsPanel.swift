@@ -66,9 +66,9 @@ class RemoteTabsPanel: UITableViewController, HomePanel {
             let syncPrefs = profile.prefs.branch("sync")
             return Sync.fetchSyncedTabsToStorage(profile.remoteClientsAndTabs, account: account, syncPrefs: syncPrefs)
         } else {
-            // Do what we can.
-            // TODO: we also want to do this if a sync fails for some reason, rather than returning a Deferred failure result.
-            return profile.remoteClientsAndTabs.getClientsAndTabs()
+            // There's no account, so there are no remote tabs.
+            // TODO: we shouldn't be here at all if there's no account set up.
+            return Deferred(value: Result(success: []))
         }
     }
 
