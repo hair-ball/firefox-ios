@@ -2,6 +2,28 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+// Haskell, baby.
+
+// Monadic bind/flatMap operator for Deferred.
+infix operator >>== {}
+public func >>== <T,U>(x: Deferred<Result<T>>, f: T -> Deferred<Result<U>>) -> Deferred<Result<U>> {
+    return chainDeferred(x, f)
+}
+
+// Basic currying.
+public func curry<A, B>(f: (A) -> B) -> A -> B {
+    return { a in
+        return f(a)
+    }
+}
+
+public func curry<A, B, C>(f: (A, B) -> C) -> A -> B -> C {
+    return { a in
+        return { b in
+            return f(a,b)
+        }
+    }
+}
 
 // Why not simply provide an override for ==? Well, that's scary, and can accidentally recurse.
 // This is enough to catch arrays, which Swift will delegate to element-==.
