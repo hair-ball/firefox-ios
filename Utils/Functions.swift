@@ -25,6 +25,14 @@ public func curry<A, B, C>(f: (A, B) -> C) -> A -> B -> C {
     }
 }
 
+public func defer<T>(s: T) -> Deferred<Result<T>> {
+    return Deferred(value: Result(success: s))
+}
+
+public func defer<T>(e: ErrorType) -> Deferred<Result<T>> {
+    return Deferred(value: Result(failure: e))
+}
+
 // Why not simply provide an override for ==? Well, that's scary, and can accidentally recurse.
 // This is enough to catch arrays, which Swift will delegate to element-==.
 public func optArrayEqual<T: Equatable>(lhs: [T]?, rhs: [T]?) -> Bool {
