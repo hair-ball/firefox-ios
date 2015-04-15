@@ -25,6 +25,27 @@ public func curry<A, B, C>(f: (A, B) -> C) -> A -> B -> C {
     }
 }
 
+// Function composition.
+infix operator <=> {}
+
+public func <=><T, U, V>(f: T -> U, g: U -> V) -> T -> V {
+    return { t in
+        return g(f(t))
+    }
+}
+public func <=><T, V>(f: T -> (), g: () -> V) -> T -> V {
+    return { t in
+        f(t)
+        return g()
+    }
+}
+public func <=><V>(f: () -> (), g: () -> V) -> () -> V {
+    return {
+        f()
+        return g()
+    }
+}
+
 public func defer<T>(s: T) -> Deferred<Result<T>> {
     return Deferred(value: Result(success: s))
 }
