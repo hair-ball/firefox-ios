@@ -10,6 +10,12 @@ import XCGLogger
 // TODO: same comment as for SyncAuthState.swift!
 private let log = XCGLogger.defaultInstance()
 
+public typealias Success = Deferred<Result<()>>
+
+private func succeed() -> Success {
+    return defer(())
+}
+
 // TODO: return values?
 /**
  * A Synchronizer is (unavoidably) entirely in charge of what it does within a sync.
